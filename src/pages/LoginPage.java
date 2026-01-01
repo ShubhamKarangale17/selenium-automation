@@ -35,4 +35,11 @@ public class LoginPage {
         enterPassword(pass);
         clickLogin();
     }
+ // Error message locator
+    By errorMessage = By.cssSelector("h3[data-test='error']");
+
+    public String getErrorMessage() {
+        return driver.findElement(errorMessage).getText();
+    }
+
 }
