@@ -21,7 +21,7 @@ public class LoginNegativeTestScreenshot extends BaseTest {
         loginPage.clickLogin();
 
         // Validation
-        String errorText = loginPage.getErrorMessage();
+        String errorText = loginPage.ge			tErrorMessage();
 
         boolean isErrorDisplayedCorrectly =
                 errorText.contains("Username and password do not match");

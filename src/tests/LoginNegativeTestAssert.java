@@ -4,7 +4,7 @@ import base.BaseTest;
 import pages.LoginPage;
 import utils.AssertUtil;
 
-public class LoginNegativeTest extends BaseTest {
+public class LoginNegativeTestAssert extends BaseTest {
 
     public static void main(String[] args) {
 
