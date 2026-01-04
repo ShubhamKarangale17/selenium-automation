@@ -22,7 +22,6 @@ The framework is designed with **real-world QA practices**, focusing on maintain
 ---
 
 ## 📂 Project Structure
-## 📂 Project Structure
 
 ```text
 SeleniumSetup
