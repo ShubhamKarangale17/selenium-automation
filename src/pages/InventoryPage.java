@@ -48,6 +48,16 @@ public class InventoryPage {
         wait.until(ExpectedConditions.elementToBeClickable(firstAddToCartBtn))
             .click();
     }
+ // Remove button (first product)
+    By removeFirstProductBtn =
+            By.xpath("(//button[contains(text(),'Remove')])[1]");
+
+    // Remove product from inventory page
+    public void removeFirstProductFromInventory() {
+        wait.until(ExpectedConditions.elementToBeClickable(removeFirstProductBtn))
+            .click();
+    }
+
 
     // Get cart count (badge value)
     public int getCartCount() {
