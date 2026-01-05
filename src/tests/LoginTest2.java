@@ -32,7 +32,6 @@ public class LoginTest2 extends BaseTest {
             System.out.println("LOGIN TEST 2 FAILED");
         }
 
-        // Close browser
-        test.tearDown();
+      
     }
 }

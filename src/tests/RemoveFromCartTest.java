@@ -1,5 +1,7 @@
 package tests;
 
+import org.testng.annotations.Test;
+
 import base.BaseTest;
 import pages.CartPage;
 import pages.InventoryPage;
@@ -8,48 +10,46 @@ import utils.AssertUtil;
 
 public class RemoveFromCartTest extends BaseTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void removeFromCartTest() {
 
-        RemoveFromCartTest test = new RemoveFromCartTest();
-        test.setUp();
+        // Create Extent test
+        testReport = extent.createTest("Remove From Cart Test");
 
-        test.driver.get("https://www.saucedemo.com");
+        driver.get("https://www.saucedemo.com");
 
         // Login
-        LoginPage loginPage = new LoginPage(test.driver);
+        LoginPage loginPage = new LoginPage(driver);
         loginPage.enterUsername("standard_user");
         loginPage.enterPassword("secret_sauce");
         loginPage.clickLogin();
 
-        // Add product
-        InventoryPage inventoryPage = new InventoryPage(test.driver);
+        // Add product & go to cart
+        InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.addFirstProductToCart();
         inventoryPage.openCart();
 
-        // Cart page
-        CartPage cartPage = new CartPage(test.driver);
+        CartPage cartPage = new CartPage(driver);
 
-        // Verify cart is not empty
+        // Validate cart not empty
         AssertUtil.assertTrue(
                 cartPage.isCartNotEmpty(),
                 "Cart is empty before removal",
-                test.driver,
+                driver,
                 "CartEmptyBeforeRemove"
         );
 
         // Remove item
         cartPage.removeProductFromCart();
 
-        // Verify cart is empty
+        // Validate cart is empty
         AssertUtil.assertTrue(
                 cartPage.isCartEmpty(),
                 "Cart not empty after removal",
-                test.driver,
+                driver,
                 "CartNotEmptyAfterRemove"
         );
 
-        System.out.println("REMOVE FROM CART TEST PASSED");
-
-        test.tearDown();
+        testReport.pass("Remove from cart functionality validated successfully");
     }
 }

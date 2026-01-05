@@ -1,5 +1,7 @@
 package tests;
 
+import org.testng.annotations.Test;
+
 import base.BaseTest;
 import pages.CartPage;
 import pages.CheckoutOverviewPage;
@@ -10,35 +12,42 @@ import utils.AssertUtil;
 
 public class CheckoutTest extends BaseTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void checkoutFlowTest() {
 
-        CheckoutTest test = new CheckoutTest();
-        test.setUp();
+        // Create Extent test
+        testReport = extent.createTest("Checkout Flow Test");
 
-        test.driver.get("https://www.saucedemo.com");
+        testReport.info("Opening application");
+        driver.get("https://www.saucedemo.com");
 
         // Login
-        LoginPage loginPage = new LoginPage(test.driver);
+        testReport.info("Logging into application");
+        LoginPage loginPage = new LoginPage(driver);
         loginPage.enterUsername("standard_user");
         loginPage.enterPassword("secret_sauce");
         loginPage.clickLogin();
 
         // Add product & go to cart
-        InventoryPage inventoryPage = new InventoryPage(test.driver);
+        testReport.info("Adding product to cart");
+        InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.addFirstProductToCart();
         inventoryPage.openCart();
 
         // Checkout
-        CartPage cartPage = new CartPage(test.driver);
-        CheckoutPage checkoutPage = new CheckoutPage(test.driver);
+        testReport.info("Starting checkout");
+        CartPage cartPage = new CartPage(driver);
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
         checkoutPage.clickCheckout();
 
+        testReport.info("Entering checkout details");
         checkoutPage.enterCheckoutDetails("Shubham", "Karangale", "411001");
         checkoutPage.clickContinue();
 
         // Finish order
+        testReport.info("Finishing order");
         CheckoutOverviewPage overviewPage =
-                new CheckoutOverviewPage(test.driver);
+                new CheckoutOverviewPage(driver);
         overviewPage.clickFinish();
 
         // Validation
@@ -47,12 +56,10 @@ public class CheckoutTest extends BaseTest {
         AssertUtil.assertTrue(
                 successMessage.contains("Thank you for your order"),
                 "Checkout failed or success message not shown",
-                test.driver,
+                driver,
                 "CheckoutFailure"
         );
 
-        System.out.println("CHECKOUT FLOW TEST PASSED");
-
-        test.tearDown();
+        testReport.pass("Checkout flow completed successfully");
     }
 }
