@@ -1,6 +1,19 @@
+# Eclipse / IDE files
 bin/
 .settings/
 .classpath
 .project
+
+# TestNG & Reports
 test-output/
+reports/
+
+# Logs
 *.log
+
+# Screenshots (optional – keep or remove as per preference)
+screenshots/
+
+# OS files
+.DS_Store
+Thumbs.db
