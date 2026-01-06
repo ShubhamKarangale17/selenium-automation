@@ -1,46 +1,66 @@
 package tests;
 
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
 import base.BaseTest;
 import pages.LoginPage;
+import utils.AssertUtil;
 
 public class LoginDataDrivenTest extends BaseTest {
 
-    public static void main(String[] args) {
+    @DataProvider(name = "loginData")
+    public Object[][] getLoginData() {
 
-        LoginDataDrivenTest test = new LoginDataDrivenTest();
-
-        // Test data (username, password)
-        String[][] loginData = {
-            {"standard_user", "secret_sauce"},   // valid
-            {"locked_out_user", "secret_sauce"}, // locked
-            {"wrong_user", "wrong_pass"}         // invalid
+        return new Object[][]{
+                {"standard_user", "secret_sauce", "valid"},
+                {"locked_out_user", "secret_sauce", "locked"},
+                {"wrong_user", "wrong_pass", "invalid"}
         };
+    }
 
-        for (int i = 0; i < loginData.length; i++) {
+    @Test(dataProvider = "loginData")
+    public void loginDataDrivenTest(String username,
+                                    String password,
+                                    String type) {
 
-            System.out.println("Running test for user: " + loginData[i][0]);
+        // Extent report entry
+        testReport = extent.createTest(
+                "Login Data Driven Test - User: " + username);
 
-            test.setUp();
-            test.driver.get("https://www.saucedemo.com");
+        testReport.info("Opening application");
+        driver.get("https://www.saucedemo.com");
 
-            LoginPage loginPage = new LoginPage(test.driver);
-            loginPage.enterUsername(loginData[i][0]);
-            loginPage.enterPassword(loginData[i][1]);
-            loginPage.clickLogin();
+        LoginPage loginPage = new LoginPage(driver);
 
-            String currentUrl = test.driver.getCurrentUrl();
+        testReport.info("Entering credentials");
+        loginPage.enterUsername(username);
+        loginPage.enterPassword(password);
+        loginPage.clickLogin();
 
-            if (loginData[i][0].equals("standard_user")
-                    && currentUrl.contains("inventory")) {
-                System.out.println("TEST PASSED\n");
-            } else if (!loginData[i][0].equals("standard_user")
-                    && currentUrl.contains("saucedemo")) {
-                System.out.println("NEGATIVE TEST PASSED\n");
-            } else {
-                System.out.println("TEST FAILED\n");
-            }
+        String currentUrl = driver.getCurrentUrl();
 
-            test.tearDown();
+        if (type.equals("valid")) {
+
+            AssertUtil.assertTrue(
+                    currentUrl.contains("inventory"),
+                    "Valid user failed to login",
+                    driver,
+                    "ValidLoginFailure"
+            );
+
+            testReport.pass("Valid login successful");
+
+        } else {
+
+            AssertUtil.assertTrue(
+                    currentUrl.contains("saucedemo"),
+                    "Invalid/Locked user login behavior incorrect",
+                    driver,
+                    "NegativeLoginFailure"
+            );
+
+            testReport.pass("Negative login validated successfully");
         }
     }
 }
