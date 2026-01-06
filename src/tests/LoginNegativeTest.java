@@ -1,40 +1,43 @@
 package tests;
 
+import org.testng.annotations.Test;
+
 import base.BaseTest;
 import pages.LoginPage;
 import utils.AssertUtil;
 
 public class LoginNegativeTest extends BaseTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void negativeLoginTest() {
 
-        LoginNegativeTest test = new LoginNegativeTest();
-        test.setUp();
+        // Create Extent report test
+        testReport = extent.createTest("Negative Login Test");
 
-        test.driver.get("https://www.saucedemo.com");
+        testReport.info("Opening application");
+        driver.get("https://www.saucedemo.com");
 
-        LoginPage loginPage = new LoginPage(test.driver);
-
-        // Invalid credentials
+        // Login with invalid credentials
+        testReport.info("Entering invalid login credentials");
+        LoginPage loginPage = new LoginPage(driver);
         loginPage.enterUsername("wrong_user");
         loginPage.enterPassword("wrong_password");
         loginPage.clickLogin();
 
         // Validation
+        testReport.info("Validating error message");
         String errorText = loginPage.getErrorMessage();
-      
 
-     // after getting errorText
-     boolean isErrorCorrect =
-             errorText.contains("Username and password do not match");
+        boolean isErrorCorrect =
+                errorText.contains("Username and password do not match");
 
-     AssertUtil.assertTrue(
-             isErrorCorrect,
-             "Error message is incorrect or not displayed",
-             test.driver,
-             "NegativeLoginAssertionFailure"
-     );
+        AssertUtil.assertTrue(
+                isErrorCorrect,
+                "Error message is incorrect or not displayed",
+                driver,
+                "NegativeLoginAssertionFailure"
+        );
 
-        test.tearDown();
+        testReport.pass("Negative login validation successful");
     }
 }
