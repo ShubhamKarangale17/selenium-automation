@@ -1,34 +1,46 @@
 package tests;
 
+import org.testng.annotations.Test;
+
 import base.BaseTest;
-import pages.LoginPage;
 import pages.InventoryPage;
+import pages.LoginPage;
+import utils.AssertUtil;
 
 public class AddToCartTest extends BaseTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void addToCartTest() {
 
-        AddToCartTest test = new AddToCartTest();
-        test.setUp();
+        // Create Extent Report test
+        testReport = extent.createTest("Add To Cart Test");
 
-        test.driver.get("https://www.saucedemo.com");
+        testReport.info("Opening application");
+        driver.get("https://www.saucedemo.com");
 
-        LoginPage login = new LoginPage(test.driver);
+        // Login
+        testReport.info("Logging into application");
+        LoginPage login = new LoginPage(driver);
         login.enterUsername("standard_user");
         login.enterPassword("secret_sauce");
         login.clickLogin();
 
-        InventoryPage inventory = new InventoryPage(test.driver);
+        // Add product to cart
+        testReport.info("Adding first product to cart");
+        InventoryPage inventory = new InventoryPage(driver);
         inventory.addFirstProductToCart();
 
         int cartCount = inventory.getCartCount();
 
-        if (cartCount == 1) {
-            System.out.println("ADD TO CART TEST PASSED");
-        } else {
-            System.out.println("ADD TO CART TEST FAILED");
-        }
+        // Validation
+        AssertUtil.assertTrue(
+                cartCount == 1,
+                "Product not added to cart",
+                driver,
+                "AddToCartFailure"
+        );
 
-        test.tearDown();
+        testReport.pass("Product successfully added to cart");
     }
 }
+
