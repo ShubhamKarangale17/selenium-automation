@@ -1,35 +1,46 @@
 package tests;
 
+import org.testng.annotations.Test;
+
 import base.BaseTest;
 import pages.InventoryPage;
 import pages.LoginPage;
+import utils.AssertUtil;
 
 public class LogoutTestExplicitWait extends BaseTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void logoutTest() {
 
-        LogoutTest test = new LogoutTest();
-        test.setUp();
+        // Create Extent report test
+        testReport = extent.createTest("Logout Test with Explicit Wait");
 
-        test.driver.get("https://www.saucedemo.com");
+        testReport.info("Opening application");
+        driver.get("https://www.saucedemo.com");
 
-        LoginPage loginPage = new LoginPage(test.driver);
+        // Login
+        testReport.info("Logging into application");
+        LoginPage loginPage = new LoginPage(driver);
         loginPage.enterUsername("standard_user");
         loginPage.enterPassword("secret_sauce");
         loginPage.clickLogin();
 
-        InventoryPage inventoryPage = new InventoryPage(test.driver);
+        // Logout
+        testReport.info("Logging out from application");
+        InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.clickMenu();
         inventoryPage.clickLogout();
 
-        String currentUrl = test.driver.getCurrentUrl();
+        // Validation
+        String currentUrl = driver.getCurrentUrl();
 
-        if (currentUrl.contains("saucedemo.com")) {
-            System.out.println("LOGOUT TEST PASSED");
-        } else {
-            System.out.println("LOGOUT TEST FAILED");
-        }
+        AssertUtil.assertTrue(
+                currentUrl.contains("saucedemo.com"),
+                "Logout failed or user not redirected to login page",
+                driver,
+                "LogoutFailure"
+        );
 
-        test.tearDown();
+        testReport.pass("Logout functionality validated successfully");
     }
 }
