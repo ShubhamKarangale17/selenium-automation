@@ -2,9 +2,9 @@ package base;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.ITestResult;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -16,7 +16,7 @@ import utils.ScreenshotUtil;
 public class BaseTest {
 
     protected WebDriver driver;
-    protected ExtentReports extent;
+    protected static ExtentReports extent;
     protected ExtentTest testReport;
 
     @BeforeMethod
@@ -28,29 +28,42 @@ public class BaseTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
 
-        // Initialize Extent Report
-        extent = ExtentManager.getExtentReport();
+        // ✅ Navigate ONLY from BaseTest
+        driver.get("https://www.saucedemo.com");
+
+        // ✅ Initialize Extent only once
+        if (extent == null) {
+            extent = ExtentManager.getExtentReport();
+        }
     }
 
     @AfterMethod
     public void tearDown(ITestResult result) {
 
-        // If test fails → take screenshot + log failure
-        if (result.getStatus() == ITestResult.FAILURE) {
+        // Safety check
+        if (testReport != null) {
 
-            String testName = result.getName();
-            ScreenshotUtil.takeScreenshot(driver, testName);
+            if (result.getStatus() == ITestResult.FAILURE) {
 
-            testReport.log(Status.FAIL,
-                    "Test Failed: " + result.getThrowable());
+                String testName = result.getName();
 
-            testReport.addScreenCaptureFromPath(
-                    "screenshots/" + testName + ".png");
-        }
+                // Take screenshot
+                ScreenshotUtil.takeScreenshot(driver, testName);
 
-        // If test passes
-        else if (result.getStatus() == ITestResult.SUCCESS) {
-            testReport.log(Status.PASS, "Test Passed");
+                testReport.log(Status.FAIL,
+                        "Test Failed: " + result.getThrowable());
+
+                testReport.addScreenCaptureFromPath(
+                        "screenshots/" + testName + ".png");
+            }
+
+            else if (result.getStatus() == ITestResult.SUCCESS) {
+                testReport.log(Status.PASS, "Test Passed");
+            }
+
+            else if (result.getStatus() == ITestResult.SKIP) {
+                testReport.log(Status.SKIP, "Test Skipped");
+            }
         }
 
         // Close browser
@@ -59,6 +72,9 @@ public class BaseTest {
         }
 
         // Flush report
-        extent.flush();
+        if (extent != null) {
+            extent.flush();
+        }
     }
 }
+

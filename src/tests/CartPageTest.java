@@ -1,5 +1,7 @@
 package tests;
 
+import org.testng.annotations.Test;
+
 import base.BaseTest;
 import pages.CartPage;
 import pages.InventoryPage;
@@ -8,28 +10,29 @@ import utils.AssertUtil;
 
 public class CartPageTest extends BaseTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void cartPageValidationTest() {
 
-        CartPageTest test = new CartPageTest();
-        test.setUp();
+        // Create Extent report entry
+        testReport = extent.createTest("Cart Page Validation Test");
 
-        test.driver.get("https://www.saucedemo.com");
-
-        // Login
-        LoginPage loginPage = new LoginPage(test.driver);
+        testReport.info("Logging into application");
+        LoginPage loginPage = new LoginPage(driver);
         loginPage.enterUsername("standard_user");
         loginPage.enterPassword("secret_sauce");
         loginPage.clickLogin();
 
         // Add product to cart
-        InventoryPage inventoryPage = new InventoryPage(test.driver);
+        testReport.info("Adding first product to cart");
+        InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.addFirstProductToCart();
 
         // Open cart
+        testReport.info("Opening cart page");
         inventoryPage.openCart();
 
         // Cart validation
-        CartPage cartPage = new CartPage(test.driver);
+        CartPage cartPage = new CartPage(driver);
 
         boolean isItemPresent = cartPage.isProductPresentInCart();
         String productName = cartPage.getProductNameFromCart();
@@ -37,19 +40,17 @@ public class CartPageTest extends BaseTest {
         AssertUtil.assertTrue(
                 isItemPresent,
                 "Product not present in cart",
-                test.driver,
+                driver,
                 "CartEmptyFailure"
         );
 
         AssertUtil.assertTrue(
                 productName != null && !productName.isEmpty(),
                 "Product name not visible in cart",
-                test.driver,
+                driver,
                 "CartProductNameFailure"
         );
 
-        System.out.println("CART PAGE VALIDATION TEST PASSED");
-
-        test.tearDown();
+        testReport.pass("Cart page validation completed successfully");
     }
 }

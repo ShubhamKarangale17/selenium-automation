@@ -2,6 +2,7 @@ package pages;
 
 import java.time.Duration;
 import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,28 +16,42 @@ public class CartPage {
 
     // Locators
     By cartItems = By.className("cart_item");
+    By productName = By.className("inventory_item_name");
     By removeBtn = By.xpath("//button[contains(text(),'Remove')]");
 
-    // Constructor
     public CartPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    // Check if cart has items
-    public boolean isCartNotEmpty() {
+    // ✅ Check if product present in cart
+    public boolean isProductPresentInCart() {
         List<WebElement> items = driver.findElements(cartItems);
         return items.size() > 0;
     }
 
-    // Remove product from cart page
+    // ✅ Get product name from cart
+    public String getProductNameFromCart() {
+        try {
+            return wait.until(
+                    ExpectedConditions.visibilityOfElementLocated(productName)
+            ).getText();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // Existing methods (keep)
+    public boolean isCartNotEmpty() {
+        return isProductPresentInCart();
+    }
+
     public void removeProductFromCart() {
         wait.until(ExpectedConditions.elementToBeClickable(removeBtn)).click();
     }
 
-    // Check if cart is empty
     public boolean isCartEmpty() {
-        List<WebElement> items = driver.findElements(cartItems);
-        return items.size() == 0;
+        return driver.findElements(cartItems).size() == 0;
     }
 }
+
