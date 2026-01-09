@@ -147,7 +147,7 @@ SeleniumSetup
 
 ## 👤 Author
 **Shubham Karangale**  
-MCA (2026) | Aspiring QA / Automation Test Engineer  
+Aspiring QA / Automation Test Engineer  
 
 ---
 
