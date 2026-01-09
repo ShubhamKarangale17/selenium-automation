@@ -57,7 +57,7 @@ public class CheckoutTest extends BaseTest {
                 successMessage.contains("Thank you for your order"),
                 "Checkout failed or success message not shown",
                 driver,
-                "CheckoutFailure"
+                "CheckoutFailure."
         );
 
         testReport.pass("Checkout flow completed successfully");
