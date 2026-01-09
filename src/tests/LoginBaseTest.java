@@ -25,6 +25,6 @@ public class LoginBaseTest extends BaseTest {
         // Assertion
         Assert.assertTrue(isLoginSuccessful, "Login failed!");
 
-        testReport.pass("User logged in successfully and landed on inventory page");
+        testReport.pass("User logged in successfully and landed The on inventory page");
     }
 }
