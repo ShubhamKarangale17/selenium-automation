@@ -16,7 +16,7 @@ public class RemoveFromCartTest extends BaseTest {
         // Create Extent test
         testReport = extent.createTest("Remove From Cart Test");
 
-        testReport.info("Opening application");
+        testReport.info("Opening Application");
         driver.get("https://www.saucedemo.com");
 
         // Login
