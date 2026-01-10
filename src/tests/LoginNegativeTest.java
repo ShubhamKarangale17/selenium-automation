@@ -14,7 +14,7 @@ public class LoginNegativeTest extends BaseTest {
         // Create Extent report test
         testReport = extent.createTest("Negative Login Test");
 
-        testReport.info("Opening application");
+        testReport.info("Opening Application");
         driver.get("https://www.saucedemo.com");
 
         // Login with invalid credentials
