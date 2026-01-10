@@ -13,7 +13,7 @@ public class LogoutTestExplicitWait extends BaseTest {
     public void logoutTest() {
 
         // Create Extent report test
-        testReport = extent.createTest("Logout Test with Explicit Wait");
+        testReport = extent.createTest("Logout Test With Explicit Wait");
 
         testReport.info("Opening application");
         driver.get("https://www.saucedemo.com");
