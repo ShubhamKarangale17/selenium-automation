@@ -14,7 +14,7 @@ public class LoginNegativeTestAssert extends BaseTest {
         // Create Extent report entry
         testReport = extent.createTest("Negative Login Test using AssertUtil");
 
-        testReport.info("Opening application");
+        testReport.info("Opening Application");
         driver.get("https://www.saucedemo.com");
 
         // Login with invalid credentials
