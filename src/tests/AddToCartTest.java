@@ -19,7 +19,7 @@ public class AddToCartTest extends BaseTest {
         driver.get("https://www.saucedemo.com");
 
         // Login
-        testReport.info("Logging into application");
+        testReport.info("Logging into Application");
         LoginPage login = new LoginPage(driver);
         login.enterUsername("standard_user");
         login.enterPassword("secret_sauce");
