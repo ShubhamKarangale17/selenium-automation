@@ -18,7 +18,7 @@ public class CheckoutTest extends BaseTest {
         // Create Extent test
         testReport = extent.createTest("Checkout Flow Test");
 
-        testReport.info("Opening application");
+        testReport.info("Opening Application");
         driver.get("https://www.saucedemo.com");
 
         // Login
