@@ -27,7 +27,7 @@ public class RemoveFromCartTest extends BaseTest {
         loginPage.clickLogin();
 
         // Add product & open cart
-        testReport.info("Adding product to cart");
+        testReport.info("Adding Product to Cart");
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.addFirstProductToCart();
         inventoryPage.openCart();
