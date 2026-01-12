@@ -28,10 +28,10 @@ public class LoginTestDataDriven extends BaseTest {
 
         if (username.equals("standard_user")) {
             Assert.assertTrue(currentUrl.contains("inventory"),
-                    "Valid login failed");
+                    "Valid login Failed");
         } else {
             Assert.assertTrue(currentUrl.contains("saucedemo"),
-                    "Invalid login test failed");
+                    "Invalid login test Failed");
         }
     }
 }
