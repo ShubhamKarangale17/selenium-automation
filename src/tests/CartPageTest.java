@@ -16,7 +16,7 @@ public class CartPageTest extends BaseTest {
         // Create Extent report entry
         testReport = extent.createTest("Cart Page Validation Test");
 
-        testReport.info("Logging into application");
+        testReport.info("Logging into Application");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.enterUsername("standard_user");
         loginPage.enterPassword("secret_sauce");
