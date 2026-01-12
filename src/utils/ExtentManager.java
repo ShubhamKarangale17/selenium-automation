@@ -14,7 +14,7 @@ public class ExtentManager {
                     new ExtentSparkReporter("reports/ExtentReport.html");
 
             reporter.config().setReportName("Automation Test Report");
-            reporter.config().setDocumentTitle("QA Automation Results");
+            reporter.config().setDocumentTitle("QA Automation results");
 
             extent = new ExtentReports();
             extent.attachReporter(reporter);
