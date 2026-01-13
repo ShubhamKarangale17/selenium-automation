@@ -38,7 +38,7 @@ public class LogoutTest extends BaseTest {
         if (currentUrl.contains("saucedemo.com")) {
             System.out.println("LOGOUT TEST PASSED");
         } else {
-            System.out.println("LOGOUT TEST FAILED");
+            System.out.println("LOGOUT TEST fAILED");
         }
 
         //test.tearDown();
