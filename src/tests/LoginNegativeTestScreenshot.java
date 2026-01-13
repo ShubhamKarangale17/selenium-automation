@@ -28,7 +28,7 @@ public class LoginNegativeTestScreenshot extends BaseTest {
         String errorText = loginPage.getErrorMessage();
 
         boolean isErrorDisplayedCorrectly =
-                errorText.contains("Username and password do not match");
+                errorText.contains("Username and Password do not match");
 
         if (!isErrorDisplayedCorrectly) {
             ScreenshotUtil.takeScreenshot(driver, "NegativeLoginFailure");
