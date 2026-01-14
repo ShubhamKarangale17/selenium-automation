@@ -55,7 +55,7 @@ public class CheckoutTest extends BaseTest {
 
         AssertUtil.assertTrue(
                 successMessage.contains("Thank you for your order"),
-                "Checkout failed or success message not shown",
+                "Checkout failed or Success message not shown",
                 driver,
                 "CheckoutFailure."
         );
